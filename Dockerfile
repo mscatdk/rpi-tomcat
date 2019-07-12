@@ -7,7 +7,7 @@ RUN apk update && \
     mkdir /data
 
 ENV JAVA_HOME /usr/lib/jvm/default-jvm
-ENV APP_VERSION 1.2.16
+ENV APP_VERSION 1.2.23
 
 WORKDIR /data
 
@@ -26,14 +26,14 @@ ENV TOMCAT_TEMP_FILE=/tmp/tomcat.tar.gz
 
 ENV APP_USER=tomcat
 ENV APP_HOME=/usr/share/tomcat
-ENV APP_VERSION=8.5.29
+ENV APP_VERSION=8.5.43
 
 RUN apk update && \
     apk upgrade && \
     apk add apr openssl && \
     rm -rf /var/cache/apk/*
 
-RUN addgroup -S ${APP_USER} && adduser -S -D -g '' -s /bin/bash -G ${APP_USER} ${APP_USER} && \
+RUN addgroup -g 3000 -S ${APP_USER} && adduser -S -D -g '' -s /bin/bash -u 3000 -G ${APP_USER} ${APP_USER} && \
     wget "http://mirrors.dotsrc.org/apache/tomcat/tomcat-8/v${APP_VERSION}/bin/apache-tomcat-${APP_VERSION}.tar.gz" -O ${TOMCAT_TEMP_FILE} && \
     tar xzf ${TOMCAT_TEMP_FILE} && \
     mv apache-tomcat-${APP_VERSION} ${APP_HOME} && \
